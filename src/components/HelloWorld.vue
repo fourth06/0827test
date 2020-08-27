@@ -1,85 +1,13 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li>
-        <a
-          href="https://vuejs.org"
-          target="_blank"
-        >
-          Core Docs
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://forum.vuejs.org"
-          target="_blank"
-        >
-          Forum
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://chat.vuejs.org"
-          target="_blank"
-        >
-          Community Chat
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://twitter.com/vuejs"
-          target="_blank"
-        >
-          Twitter
-        </a>
-      </li>
-      <br>
-      <li>
-        <a
-          href="http://vuejs-templates.github.io/webpack/"
-          target="_blank"
-        >
-          Docs for This Template
-        </a>
-      </li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li>
-        <a
-          href="http://router.vuejs.org/"
-          target="_blank"
-        >
-          vue-router
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vuex.vuejs.org/"
-          target="_blank"
-        >
-          vuex
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vue-loader.vuejs.org/"
-          target="_blank"
-        >
-          vue-loader
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-        >
-          awesome-vue
-        </a>
-      </li>
-    </ul>
+  <div>
+    <label v-for="value in list">
+        <input type="checkbox" :value="value.empno" v-model="mymymy">
+        {{value.empno}} {{value.name}}
+    </label>
+    <br>
+    <input type="textarea" value="" v-model="message"/>
+    <br>
+    <button @click="getapi()">送出</button>
   </div>
 </template>
 
@@ -89,12 +17,44 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      mymymy: [],
+      message: '',
+      sendData: [],
+      empno: '',
+      list:[
+       { empno: "12604", name: "子靖" },
+       { empno: "12833", name: "仕龍" },
+       { empno: "12834", name: "韋豪" },
+       { empno: "12948", name: "子婷" },
+       { empno: "11087", name: "承甫" },
+       { empno: "11241", name: "仕昇" },
+       { empno: "11692", name: "冠均" },
+       { empno: "11736", name: "琪鴻" },
+       { empno: "12037", name: "志遠" },
+       { empno: "13131", name: "琦堯" },
+       { empno: "13536", name: "鴻輝" },
+       { empno: "11002", name: "筱薰" },
+       { empno: "12651", name: "志宏" },
+     ],
     }
   },
   methods:{
     getapi(){
-      let tag = 'lib.cg.getDrugBasicData'
+      if (this.mymymy) {
+        this.mymymy.forEach(Element =>
+          {
+            if (this.empno) {
+              this.empno += ','+Element
+            } else {
+              this.empno += Element
+            }
+          }
+        )
+      }
+      console.log(this.empno)
+      this.sendData.push({'ser_no':'000', 'typ':'1', 'receiver':this.empno, 'msg':this.message, 'sender':'12604', 'lnk_no':'', 'src':''});
+      console.log(this.sendData)
+      let tag = 'evt.msg.sendmsg'
       let param = new FormData()
       let conf = {
         params: {
@@ -104,10 +64,12 @@ export default {
       let obj = {
         wb_base64: 0,
         encode: "N",
-        drug_cod: "IDAN",
-        typ: "PS"
+        mtyp: "13",
+        mtyp: "13",
+        msgtxt: this.sendData
       }
       param.append("var", Base64.encode(JSON.stringify(obj)));
+      console.log(obj)
       this.$axios.post("/api", param, conf)
       .then((response) => {
         console.log(response);
@@ -117,9 +79,6 @@ export default {
       })
     }
   },
-  mounted(){
-    this.getapi();
-  }
 }
 </script>
 
