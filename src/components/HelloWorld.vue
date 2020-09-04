@@ -2,7 +2,7 @@
   <div>
      監測編碼查詢頁面
     <br>
-    <button>新增</button>
+    <button @click="changeadd()">新增</button>
     <br>
     監測項目: 
     <select v-model="item">
@@ -15,9 +15,9 @@
     </select>
     <br>
     狀態: 
-    <input type="radio" id="normal" v-model="tsc" value="生效"/>
+    <input type="radio" id="AA" name="tscaaa" v-model="tsc" value="A"/>
     <label for="A">生效</label>
-    <input type="radio" id="middle" v-model="tsc" value="失效"/>
+    <input type="radio" id="DD" name="tscaaa" v-model="tsc" value="D"/>
     <label for="D">失效</label>
     <br>
     <button @click="getapi()">送出</button>
@@ -56,7 +56,7 @@ export default {
     return {
       item: '',
       source: '',
-      tsc: '',
+      tsc: 'A',
       list: ["水質", "器械","環境","人員"],
       listItem: [{
                 MN_COD: 'AIRB',
@@ -105,7 +105,7 @@ export default {
         wb_base64: 0,
         encode: "N",
         MN_COD: this.item,
-        SRC: this.source,
+        SRC: this.source+1,
         TSC: this.tsc
       }
       param.append("var", Base64.encode(JSON.stringify(obj)));
@@ -116,6 +116,8 @@ export default {
           this.dodo = JSON.parse(Base64.decode(response.data));
           if (this.dodo.sts == '000000') {
             this.dataIflb = this.dodo.val;
+          } else if (this.dodo.sts == 'E00004') {
+            alert("沒咚咚")
           }
           console.log(this.dataIflb);
       })
@@ -130,6 +132,11 @@ export default {
       this.$router.push({
         name: 'editPage',
         params:{'MN_NO':data.MN_NO,'MN_NAM':data.MN_NAM,'SRC':data.SRC,'TSC':data.TSC},
+      })
+    },
+    changeadd(){
+      this.$router.push({
+        name: 'addPage',
       })
     },
   },
