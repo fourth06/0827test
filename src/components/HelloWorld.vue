@@ -3,7 +3,7 @@
     <div class="title">監測編碼查詢頁面</div>
     <div class="item">
       <div>
-        監測項目: 
+        監測項目:    
         <select v-model="item" class="selectbox">
             <option v-for="data in listItem" :value="data.MN_COD">{{data.MN_COD}} {{data.MN_NAM}}</option>
         </select>
