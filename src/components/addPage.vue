@@ -1,17 +1,24 @@
 <template>
     <div>
-        監測編碼新增畫面
-        <br>
-        監測編碼:<input type="text" v-model='cod'>
-        <br>
-        監測項目:<input type="text" v-model='item'>
-        <br>
-        檢體來源:
-        <select v-model="source">
-            <option v-for="(value,key) in list" :value="key">{{value}}</option>
-        </select>
-        <br>
-        <button @click="getapi()">儲存</button>
+        <div class="title">監測編碼新增畫面</div>
+        <div class="item">
+            <div>
+                監測編碼:<input type="text" v-model='cod'>
+            </div>
+            <div>
+                監測項目:<input type="text" v-model='item'>
+            </div>
+            <div>
+                檢體來源:
+                <select v-model="source" class="selectbox">
+                    <option v-for="(value,key) in list" :value="key">{{value}}</option>
+                </select>
+            </div>
+            <div>
+                <button class="addbut" @click="getapi()">儲存</button>
+                <button class="findbut" @click="getcancel()">取消</button>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -63,58 +70,89 @@ export default {
             console.log(error);
         })
     },
+    getcancel(){
+      this.$router.push({
+        name: 'HelloWorld',
+      })
+    },
   },
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
+input[type="text"] {
+    border: 0px;
+    height: 20px;
+    background-color: rgba(0, 0, 0, 0);
+    color: #4f4f4f;
+    border: none;
+    border-bottom: 1px solid #9d9d9d;
+    padding: 1px 2px;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+input[type="text"]:focus {
+    outline: 0px;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
+.title {
+    font-family:Microsoft JhengHei;
+    font-size: 26px;
 }
-a {
-  color: #42b9
+.item > div {
+  margin: 20px 10px;
 }
-.tttab{
-    width: 100%;
-    border:1.5px solid black;
-    display: flex;
-    flex-direction: row;
-    /* flex-wrap: wrap; */
+.selectbox {
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    overflow: hidden;
+    margin: 0;
+    position: relative;
+    width: fit-content;
+    display: inline-block;
+    padding: 0;
+    background-size: contain;
 }
-.stack{
-    background-color: yellowgreen;
-    align:left;
-    width: 20%;
+.addbut {
+    background-color: #f85953;
+    text-align: center;
+    height: 30px;
+    border-radius: 4px;
+    padding: 0 5px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    font: normal 16px/140% Arial, Helvetica, "微軟正黑體";
 }
-.middle{
-    flex-wrap: wrap;
-    width: 80%;
+.addbut:hover {
+    background-color: #fff;
+    text-align: center;
+    height: 30px;
+    border-radius: 4px;
+    padding: 0 5px;
+    color: #f85953;
+    font-size: 16px;
+    cursor: pointer;
+    font: normal 16px/140% Arial, Helvetica, "微軟正黑體";
 }
-.trrrr{
-    align:left;
-    border:1px solid rgb(0, 60, 255);
-    width: 100%;
+.findbut {
+    background-color: #3f94ff;
+    text-align: center;
+    height: 30px;
+    border-radius: 4px;
+    padding: 0 5px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    font: normal 16px/140% Arial, Helvetica, "微軟正黑體";
 }
-.concc{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-}
-.imgcc{
-    align:center;
-    width: 20%;
-}
-.valcc{
-    align:left;
-    width: 100%;
+.findbut:hover {
+    background-color: #fff;
+    text-align: center;
+    height: 30px;
+    border-radius: 4px;
+    padding: 0 5px;
+    color: #3f94ff;
+    font-size: 16px;
+    cursor: pointer;
+    font: normal 16px/140% Arial, Helvetica, "微軟正黑體";
 }
 </style>
